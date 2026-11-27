@@ -1,0 +1,462 @@
+{
+  "entities": {
+    "PharmacyProfile": {
+      "title": "PharmacyProfile",
+      "description": "Registered pharmacy owner profile and alert preferences.",
+      "type": "object",
+      "properties": {
+        "ownerId": {
+          "type": "string",
+          "description": "Firebase Auth UID of the pharmacy owner.",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "pharmacyName": {
+          "type": "string",
+          "description": "Official registered name of the pharmacy.",
+          "minLength": 2,
+          "maxLength": 120
+        },
+        "ownerName": {
+          "type": "string",
+          "description": "Full name of the pharmacy owner.",
+          "minLength": 2,
+          "maxLength": 100
+        },
+        "ownerEmail": {
+          "type": "string",
+          "format": "email",
+          "description": "Verified email address of the pharmacy owner.",
+          "maxLength": 150
+        },
+        "licenseNumber": {
+          "type": "string",
+          "description": "Pharmacy operating license or registration identifier.",
+          "maxLength": 60
+        },
+        "phone": {
+          "type": "string",
+          "description": "Contact telephone number for the pharmacy.",
+          "maxLength": 30
+        },
+        "address": {
+          "type": "string",
+          "description": "Street address of the pharmacy.",
+          "maxLength": 240
+        },
+        "expiryAlertDays": {
+          "type": "integer",
+          "description": "Advance warning threshold in days before medicine expiry."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server creation timestamp."
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server last-updated timestamp."
+        }
+      },
+      "required": [
+        "ownerId",
+        "pharmacyName",
+        "ownerName",
+        "ownerEmail",
+        "licenseNumber",
+        "phone",
+        "address",
+        "expiryAlertDays",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "Medicine": {
+      "title": "Medicine",
+      "description": "A tracked medicine batch with barcode, batch number, stock thresholds, supplier details, and expiry date.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "ownerId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 140
+        },
+        "barcode": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 64,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "batchNumber": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "category": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 60
+        },
+        "manufacturingDate": {
+          "type": "string",
+          "minLength": 10,
+          "maxLength": 10,
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+        },
+        "expiryDate": {
+          "type": "string",
+          "minLength": 10,
+          "maxLength": 10,
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+        },
+        "quantity": {
+          "type": "integer"
+        },
+        "minStockLevel": {
+          "type": "integer"
+        },
+        "unitPrice": {
+          "type": "number"
+        },
+        "supplierName": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120
+        },
+        "supplierEmail": {
+          "type": "string",
+          "maxLength": 150
+        },
+        "supplierPhone": {
+          "type": "string",
+          "maxLength": 30
+        },
+        "disposed": {
+          "type": "boolean"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "id",
+        "ownerId",
+        "name",
+        "barcode",
+        "batchNumber",
+        "category",
+        "manufacturingDate",
+        "expiryDate",
+        "quantity",
+        "minStockLevel",
+        "unitPrice",
+        "supplierName",
+        "supplierEmail",
+        "supplierPhone",
+        "disposed",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "StockMovement": {
+      "title": "StockMovement",
+      "description": "Immutable stock movement audit log for sales, initial stock, restocks, adjustments, and expired disposals.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "ownerId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "medicineId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "medicineName": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 140
+        },
+        "barcode": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 64,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "batchNumber": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "type": {
+          "type": "string",
+          "enum": ["initial", "sale", "restock", "adjustment", "expired_disposal"]
+        },
+        "quantityDelta": {
+          "type": "integer"
+        },
+        "quantityAfter": {
+          "type": "integer"
+        },
+        "unitPrice": {
+          "type": "number"
+        },
+        "totalAmount": {
+          "type": "number"
+        },
+        "note": {
+          "type": "string",
+          "maxLength": 240
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "id",
+        "ownerId",
+        "medicineId",
+        "medicineName",
+        "barcode",
+        "batchNumber",
+        "type",
+        "quantityDelta",
+        "quantityAfter",
+        "unitPrice",
+        "totalAmount",
+        "note",
+        "createdAt"
+      ]
+    },
+    "SupplierOrder": {
+      "title": "SupplierOrder",
+      "description": "Approval-gated supplier reorder record with delivery status tracking.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "ownerId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "medicineId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "medicineName": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 140
+        },
+        "barcode": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 64,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "currentStockAtTrigger": {
+          "type": "integer"
+        },
+        "orderQuantity": {
+          "type": "integer"
+        },
+        "unitCost": {
+          "type": "number"
+        },
+        "totalCost": {
+          "type": "number"
+        },
+        "supplierName": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120
+        },
+        "supplierEmail": {
+          "type": "string",
+          "maxLength": 150
+        },
+        "supplierPhone": {
+          "type": "string",
+          "maxLength": 30
+        },
+        "status": {
+          "type": "string",
+          "enum": ["pending_approval", "ordered", "in_transit", "completed", "rejected"]
+        },
+        "deliveryStatusText": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120
+        },
+        "referenceNumber": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 40
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "id",
+        "ownerId",
+        "medicineId",
+        "medicineName",
+        "barcode",
+        "currentStockAtTrigger",
+        "orderQuantity",
+        "unitCost",
+        "totalCost",
+        "supplierName",
+        "supplierEmail",
+        "supplierPhone",
+        "status",
+        "deliveryStatusText",
+        "referenceNumber",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "AlertNotification": {
+      "title": "AlertNotification",
+      "description": "Color-coded pharmacy inventory, expiry, and reorder notification.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "ownerId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "medicineId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "medicineName": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 140
+        },
+        "alertType": {
+          "type": "string",
+          "enum": ["low_stock", "expiry_approaching", "expired", "order_update"]
+        },
+        "severity": {
+          "type": "string",
+          "enum": ["green", "yellow", "orange", "red"]
+        },
+        "message": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 320
+        },
+        "orderId": {
+          "type": "string",
+          "maxLength": 128
+        },
+        "read": {
+          "type": "boolean"
+        },
+        "resolved": {
+          "type": "boolean"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "id",
+        "ownerId",
+        "medicineId",
+        "medicineName",
+        "alertType",
+        "severity",
+        "message",
+        "orderId",
+        "read",
+        "resolved",
+        "createdAt",
+        "updatedAt"
+      ]
+    }
+  },
+  "firestore": {
+    "/pharmacies/{ownerId}": {
+      "schema": { "$ref": "#/entities/PharmacyProfile" },
+      "description": "Private pharmacy owner profile and notification settings."
+    },
+    "/pharmacies/{ownerId}/medicines/{medicineId}": {
+      "schema": { "$ref": "#/entities/Medicine" },
+      "description": "Medicine batch inventory records belonging to the pharmacy owner."
+    },
+    "/pharmacies/{ownerId}/movements/{movementId}": {
+      "schema": { "$ref": "#/entities/StockMovement" },
+      "description": "Immutable stock movement and sales ledger entries."
+    },
+    "/pharmacies/{ownerId}/orders/{orderId}": {
+      "schema": { "$ref": "#/entities/SupplierOrder" },
+      "description": "Approval-based supplier reorder requests and delivery tracking."
+    },
+    "/pharmacies/{ownerId}/notifications/{notificationId}": {
+      "schema": { "$ref": "#/entities/AlertNotification" },
+      "description": "Color-coded low-stock, expiry, and order alerts."
+    }
+  }
+}
